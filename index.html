@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./main.js" defer></script>
+    <title>Tienda</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Pacifico&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet"
+  </head>
+  <body>
+    <header>
+      <nav class="nav-bar-first">
+        <img
+          class="ico-menu"
+          src="./assets/logos/menu-bar.png"
+          alt="icono barra de manu"
+        />
+
+        <h1 class="logo">
+          <img
+            src="./assets/logos/logo_CasaDelLibro.svg"
+            alt="logo casa del libro"
+            class="logo_CasaDelLibro"
+          />
+        </h1>
+        <search class="barra-busqueda">
+          <form action="/buscar" method="get">
+            <input
+              type="search"
+              name="search_bar"
+              placeholder="Busca por autor, título, género, ISBN"
+            />
+            <button type="submit">
+              <img
+                class="ico-lupa"
+                src="./assets/logos/ico_lupa.svg"
+                alt="ico_lupa"
+              />
+            </button>
+          </form>
+        </search>
+        <a
+          class="librerias"
+          href="https://www.casadellibro.com/nosotros/nuestras-tiendas-nuestrastiendas/0"
+          ><img
+            src="./assets/logos/ico_ubicacion.svg"
+            alt="icono ubicacion liberias"
+          /><span>Librerías</span></a
+        >
+        <button class="login">
+          <img src="./assets/logos/ico_usuario.svg" alt="icono user" />
+          <span>Mi Cuenta</span>
+        </button>
+        <img
+          class="cesta"
+          src="./assets/logos/ico_cesta.svg"
+          alt="icono cesta"
+        />
+      </nav>
+      <nav class="nav-bar-secondary">
+        <!-- areas -->
+      </nav>
+    </header>
+
+    <main>
+      <aside>
+        <!-- categorias -->
+      </aside>
+      <section class="best-sellers"></section>
+      <section class="recomendaciones"></section>
+    </main>
+    <footer></footer>
+  </body>
+</html>

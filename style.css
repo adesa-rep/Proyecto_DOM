@@ -1,0 +1,340 @@
+:root {
+  --space-max: 5%;
+  --space-min: 2%;
+  --space-btn: 4%;
+  --radius: 8px;
+  --header-mobile-height: 17vh;
+  --header-desktop-height: 1vh;
+  /* tamaños fuentes */
+  --typo-xxs: 14px;
+  --typo-xs: 16px;
+  --typo-sm: 19px;
+  --typo-md: clamp(1.75rem, 1.36vi + 1.41rem, 2.5rem);
+  --typo-xl: clamp(1.5rem, 1.54vi + 1.12rem, 2.34rem);
+  --typo-xxl: 50px;
+  --typo-h1-header: clamp(0.88rem, 0.45vi + 0.76rem, 1.13rem);
+  /* colores */
+  --header-hover: #d9e5e3;
+  --btn-general: #ebaa20;
+  --btn-especial: #d9017a;
+  --items-background: #f7f8f9;
+  --primary-color: black;
+  --secondary-color: #004d43;
+  --envio-color: #51c531;
+  --precio-color: #b71c1c;
+  --bottom-line: 0.2px solid rgb(140, 140, 140);
+  /* para pruebas */
+  --border-red: 2px solid red;
+  --border-blue: 2px solid blue;
+  --border-plum: 2px solid plum;
+}
+
+/* ? ---------------------------------------
+ ! ------ formateo general de estilos ------
+ ? --------------------------------------- */
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* borramos viñetas de todas las li */
+ul {
+  list-style-type: none;
+}
+
+/* borramos el subrayado y el dolor de resaltado de todos los anchor */
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+body {
+  font-size: var(--typo-xs);
+  min-height: 100vh;
+  background-color: #e9ebef;
+}
+
+.librerias,
+.login span,
+.librerias span {
+  display: none;
+}
+
+/* ? ---------------------------------------
+ ! ------ mobile first ------
+ ? --------------------------------------- */
+
+header {
+  width: 100vw;
+  /* display: flex;
+  flex-direction: column; */
+  background-color: antiquewhite;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  padding: 10px;
+}
+
+.nav-bar-first {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr 1fr;
+  grid-template-rows: repeat(2, minmax(30px, 1fr));
+  align-items: center;
+  grid-template-areas:
+    'menu logo cuenta cesta'
+    'search search search search';
+  gap: 10px;
+}
+
+.nav-bar-first .ico-menu,
+.login,
+.cesta,
+.ico-lupa {
+  width: clamp(20px, calc(20px + 1vw), 30px);
+  height: auto; /* Mantiene la proporción */
+  align-self: center;
+  justify-self: center;
+}
+
+.ico-menu {
+  grid-area: menu;
+  justify-self: center;
+}
+
+.logo {
+  grid-area: logo;
+  justify-self: center;
+}
+
+.logo img {
+  width: clamp(125px, 10vw, 150px);
+  height: auto; /* Mantiene la proporción */
+}
+
+.barra-busqueda {
+  grid-area: search;
+  border: 1px solid rgb(140, 140, 140);
+}
+
+.barra-busqueda form {
+  display: flex;
+  gap: var(--space-min);
+  padding: var(--space-min);
+  padding: 0;
+  /*para evitar desplazamientos fuera del header*/
+}
+
+.barra-busqueda form > input {
+  flex: 4;
+  border: none;
+  background-color: antiquewhite;
+}
+
+.barra-busqueda form > input::placeholder {
+  text-align: center;
+  font-size: var(--typo-xs);
+}
+
+.login {
+  grid-area: cuenta;
+  justify-self: center;
+}
+
+.cesta {
+  grid-area: cesta;
+  justify-self: center;
+}
+
+/* 
+? ---------------------------------------
+ todo --------------- main ---------------
+ ? ---------------------------------------
+*/
+
+main {
+  width: 100vw;
+  margin-top: var(--header-mobile-height);
+}
+
+main button {
+  width: 90%;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 400;
+  padding: var(--space-btn);
+  background-color: var(--btn-general);
+  border-radius: var(--radius);
+  border: none;
+  display: block;
+  margin: var(--space-min) auto 0;
+}
+
+article {
+  padding: var(--space-max);
+}
+
+/* article > img {
+  width: 100%;
+} */
+
+section ~ h2 {
+  font-family: 'inter';
+  font-weight: 500;
+  font-size: var(--typo-md);
+  line-height: 1.8;
+  letter-spacing: 1.5px;
+  margin: 0 var(--space-min);
+  border-bottom: var(--bottom-line);
+  color: red;
+}
+
+/* 
+? ---------------------------------------
+ todo ---------- best sellers ----------
+ ? ---------------------------------------
+*/
+
+.best-sellers > h2 {
+  margin-left: 10px;
+  /* margin-top: 100px; */
+  font-size: var(--typo-sm);
+}
+
+/* tanto el ul como el article de best-sellers estan en flex column */
+.best-sellers ul,
+.best-sellers article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid rgb(184, 183, 183);
+}
+
+.best-sellers ul {
+  margin-top: 5px;
+  padding-top: 10px;
+  /* border: 2px solid; */
+  /* background-color: red; */
+}
+
+.best-sellers li,
+.best-sellers article {
+  width: 330px;
+  height: auto;
+}
+
+.best-sellers img {
+  /* width: 300px;
+  height: auto; */
+  width: auto;
+  height: 350px;
+}
+
+.best-sellers article {
+  gap: 2px;
+  font-family: 'inter';
+}
+
+h2.titulo-libro {
+  border-top: var(--bottom-line);
+  font-weight: 550;
+  font-size: var(--typo-sm);
+  margin-top: 10px;
+  padding-top: var(--space-min);
+}
+
+p.autor {
+  font-weight: 200;
+  font-size: var(--typo-xs);
+  margin-top: 5px;
+}
+
+p.precio {
+  font-weight: 550;
+  font-size: var(--typo-sm);
+  color: var(--precio-color);
+  margin-top: 10px;
+}
+
+/* p.envio {
+  font-weight: 500;
+  font-size: var(--typo-xs);
+  color: var(--envio-color);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+} */
+
+/* 
+? ---------------------------------------
+ todo ------------- footer -------------
+ ? ---------------------------------------
+*/
+
+/*? social-media */
+
+footer {
+  width: 100vw;
+}
+
+.social-media ul {
+  display: flex;
+  gap: var(--space-min);
+  justify-content: space-around;
+  margin: var(--space-max);
+  flex-wrap: wrap;
+}
+
+.social-media img {
+  width: 8vw;
+}
+
+/* ? nav */
+
+.footer-nav {
+  padding: var(--space-min);
+  font-family: 'inter';
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+
+section.footer-nav {
+  line-height: 1.8;
+  /* background-color: red; */
+}
+
+section.footer-nav > h2 {
+  font-size: var(--typo-sm);
+  color: var(--secondary-color);
+  /* text-align: end; */
+  /* color: red; */
+}
+
+section.footer-nav a {
+  color: rgb(60, 58, 58);
+  font-size: var(--typo-xxs);
+  /* color: red; */
+  text-align: center;
+}
+
+/* footer p {
+  background-color: black;
+  color: white;
+  line-height: 2;
+  text-align: center;
+  width: 100%;
+  color: red;
+} */
+
+.footer-nav-container {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
