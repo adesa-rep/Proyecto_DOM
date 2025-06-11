@@ -4,7 +4,7 @@
   --space-btn: 4%;
   --radius: 8px;
   --header-mobile-height: 17vh;
-  --header-desktop-height: 1vh;
+  --header-desktop-height: 10vh;
   /* tamaños fuentes */
   --typo-xxs: 14px;
   --typo-xs: 16px;
@@ -37,6 +37,10 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+}
+
+.nav-bar-secondary {
+  display: none;
 }
 
 /* borramos viñetas de todas las li */
@@ -149,6 +153,9 @@ header {
   justify-self: center;
 }
 
+.acciones {
+  display: none;
+}
 /* 
 ? ---------------------------------------
  todo --------------- main ---------------
@@ -218,8 +225,6 @@ section ~ h2 {
 .best-sellers ul {
   margin-top: 5px;
   padding-top: 10px;
-  /* border: 2px solid; */
-  /* background-color: red; */
 }
 
 .best-sellers li,
@@ -261,14 +266,6 @@ p.precio {
   margin-top: 10px;
 }
 
-/* p.envio {
-  font-weight: 500;
-  font-size: var(--typo-xs);
-  color: var(--envio-color);
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-} */
-
 /* 
 ? ---------------------------------------
  todo ------------- footer -------------
@@ -305,20 +302,16 @@ footer {
 
 section.footer-nav {
   line-height: 1.8;
-  /* background-color: red; */
 }
 
 section.footer-nav > h2 {
   font-size: var(--typo-sm);
   color: var(--secondary-color);
-  /* text-align: end; */
-  /* color: red; */
 }
 
 section.footer-nav a {
   color: rgb(60, 58, 58);
   font-size: var(--typo-xxs);
-  /* color: red; */
   text-align: center;
 }
 
@@ -337,4 +330,224 @@ section.footer-nav a {
   padding: 10px;
   margin-bottom: 10px;
   justify-content: space-between;
+}
+
+/* ? ---------------------------------------
+ ! ------ desktop ------
+ ? --------------------------------------- */
+
+@media (min-width: 500px) {
+  /*? dar visibilidad al resto de iconos del header. NOTA: ver ficha y añadir son los botones del .acciones (lo que se mostrara al hacer hover en los best sellers) */
+  /* .ver-ficha,
+  .añadir, */
+  .acciones,
+  .librerias,
+  .login {
+    display: block;
+  }
+
+  .header {
+    width: 98vw;
+  }
+
+  .nav-bar-first {
+    display: flex;
+    gap: var(--space-min);
+  }
+
+  .barra-busqueda {
+    flex: 1 1 300px;
+    border: var(--bottom-line);
+  }
+
+  .barra-busqueda form {
+    padding: 0;
+  }
+
+  /* ? main */
+  main {
+    width: 98vw;
+    /*espacio para que sea sea visible todo el contenido del main y no quede solapado con el header*/
+    margin-top: 60px;
+    padding: 0 10px;
+  }
+
+  /* ? best-sellers */
+
+  .best-sellers ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    grid-auto-flow: column; /*! Asegura el scroll horizontal */
+    gap: 10px;
+    padding-bottom: 10px;
+    overflow-x: scroll;
+  }
+
+  .best-sellers ul li > article {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 10px;
+    transition: all 0.4s ease-in-out;
+    /* border: 2px solid red; */
+  }
+
+  .best-sellers ul li,
+  .best-sellers ul li article {
+    width: 220px;
+    /* height: 300px; */
+    margin: auto;
+  }
+
+  .best-sellers ul li article img {
+    /* ! -----importante: asignamos alto y ancho fijo para evitar desalineacion. Sin embargo, como al momento de indicar el ancho minimo de la grilla, establecimos que seria de 230px, el width de las imagenes debe ser inferior a este para evitar solapamientos */
+    width: 200px;
+    height: 300px;
+    margin: auto; /* para centrar la imagen */
+  }
+
+  .best-sellers ul,
+  article {
+    align-items: start;
+    justify-content: start;
+  }
+
+  /* ! resaltar con un borde el articulo seleccionado (lo aplicaremos en el article mas arriba con un transition 'all' para que se vea animado */
+  .best-sellers ul li article:hover {
+    border: 2px solid black;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px 2px;
+  }
+
+  /* ! div .acciones: mostrando botones con transition y usuando las propiedades visibility y opacity */
+  .best-sellers ul li article .acciones {
+    width: 100%;
+    opacity: 0; /* Oculto */
+    visibility: hidden; /* Oculto */
+    /* usamos transform para bajar el elemento 10px (Esto asegura que el elemento esté invisible y abajo del contenedor, listo para ser animado al subir cuando se haga hover): */
+    transform: translateY(10px);
+    /* usamos transition para que los cambios de opacity, visibility y transform sean animados en 0.6 segundos: */
+    transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out,
+      transform 0.6s ease-in-out;
+
+    /* usamos position: absolute para sacar .acciones del flujo normal para que no ocupe espacio cuando esté oculto */
+    position: absolute; /* Lo saca del flujo normal del documento */
+    bottom: 10px; /* Lo coloca 10px abajo del borde inferior del artículo */
+    left: 0; /* Lo posiciona a la izquierda del artículo (alineamos con el borde izquierdo del articulo) */
+  }
+
+  /* cuando hacemos hover sobre algun articulo mostramos el div con la clase "acciones" */
+  .best-sellers ul li article:hover .acciones {
+    /* display: block; */
+    opacity: 1;
+    visibility: visible;
+    /* lo submos a su posicion posición normal, dando un efecto de deslizamiento pero manteniendolo centrado a la izquierda: */
+    transform: translateX(0px) translateY(0);
+  }
+
+  /* establecemos cómo sera la transicion para mostrar y/o ocultar los elementos con la clase "acciones"  usando las propiedades opacity y visibility*/
+  .best-sellers ul li article .precio {
+    /* display: block; */
+    transition: opacity 0.5s ease-in-out, visibility 0.3s ease-in-out;
+    margin-bottom: 10px;
+  }
+
+  /* Ocultamos .precio al hacer hover */
+  .best-sellers ul li article:hover .precio {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .info-libro {
+    height: 90px;
+  }
+
+  .best-sellers ul li article:hover h2.titulo-libro {
+    font-size: var(--typo-xxs);
+  }
+
+  .best-sellers ul li article:hover p.autor {
+    display: none;
+  }
+
+  .best-sellers ul li article > .precio {
+    height: 20px;
+    font-size: var(--typo-xs);
+  }
+
+  .info-libro h2 {
+    text-align: left;
+    font-size: var(--typo-xs);
+  }
+
+  /* efecto sobre botones del nav y sobre .acciones */
+  button:hover {
+    /* background: rgb(168, 133, 69); */
+    background-color: orange;
+    color: white;
+  }
+
+  /* ? footer */
+
+  footer {
+    background-color: rgb(210, 204, 204);
+    padding: 5px;
+    margin-top: 2vh;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 99vw;
+  }
+
+  /* social media */
+
+  .social-media ul {
+    justify-content: center;
+    margin: 10px;
+  }
+
+  .social-media img {
+    width: 30px;
+  }
+
+  /* nav */
+
+  .footer-nav-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+    /* si uso minmax(200px, 1fr) no podre usar justify-content porque siempre intentara ocupar todo el espacio disponible al ser solo dos columnas */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 300px));
+    /* gap: clamp(10px, 50px, 80px); */
+    /* gap: clamp(10px, 115px, 200px); */
+    gap: 10px;
+    justify-content: center;
+    /* border: 2px solid red; */
+  }
+
+  .footer-nav {
+    display: grid;
+  }
+
+  .footer-nav-container section > h2 {
+    font-size: var(--typo-xs);
+    height: 30px;
+  }
+
+  .footer-nav-container section > ul {
+    min-height: 100px;
+    /* border: 2px solid red; */
+    height: clamp(100px, 110px + 1vw, 200px);
+  }
+
+  .footer-nav-container section > h2:hover {
+    color: black;
+  }
+
+  .footer-nav-container section a {
+    font-size: var(--typo-xxs);
+  }
+
+  .footer-nav-container section a:hover {
+    filter: drop-shadow(5px 5px 5px rgb(255, 166, 0));
+    color: black;
+  }
 }

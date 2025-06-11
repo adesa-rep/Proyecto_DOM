@@ -209,6 +209,10 @@ const crearGaleria = (array) => {
         <p class="autor">${element.autor}</p>
       </div>
       <p class="precio">${element.precio}</p>
+      <div class='acciones'>
+        <button class="ver-ficha">ver ficha</button>
+        <button class="añadir">añadir</button>
+      </div>
     `;
     li.appendChild(article);
     ul.appendChild(li);
@@ -217,7 +221,7 @@ const crearGaleria = (array) => {
   return ul;
 };
 
-const crearLista = (array, tituloSection) => {
+const crearSection = (array, tituloSection) => {
   const ul = document.createElement('ul');
   const h2 = document.createElement('h2');
   h2.textContent = tituloSection;
@@ -234,6 +238,16 @@ const crearLista = (array, tituloSection) => {
   // const container = document.createElement('div');
   // container.append(h2, ul);
   // return container;
+};
+
+const crearLista = (array) => {
+  const ul = document.createElement('ul');
+  array.forEach((element) => {
+    const li = document.createElement('li');
+    li.textContent = element;
+    ul.appendChild(li);
+  });
+  return ul;
 };
 
 //? ---------------------------------------
@@ -279,14 +293,14 @@ socialSection.appendChild(ul);
 const casaLibroSection = document.createElement('section');
 casaLibroSection.className = 'footer-nav';
 //ejecutamos la funcion crear lista:
-const casaLibroLista = crearLista(footerCasaLibro, 'Casa del libro'); //devuelve un nodeList con un ul y un h2
+const casaLibroLista = crearSection(footerCasaLibro, 'Casa del libro'); //devuelve un nodeList con un ul y un h2
 casaLibroSection.append(casaLibroLista[0], casaLibroLista[1]);
 // casaLibroSection.appendChild(casaLibroLista);
 
 //seccion para info legal
 const infoLegalSection = document.createElement('section');
 infoLegalSection.className = 'footer-nav';
-const infoLegalLista = crearLista(footerInfoLegal, 'Informacion Legal');
+const infoLegalLista = crearSection(footerInfoLegal, 'Informacion Legal');
 infoLegalSection.append(infoLegalLista[0], infoLegalLista[1]);
 
 const footerNavContainer = document.createElement('div');
@@ -295,3 +309,11 @@ footerNavContainer.className = 'footer-nav-container';
 // footer.append(socialSection, casaLibroSection, infoLegalSection);
 footerNavContainer.append(casaLibroSection, infoLegalSection);
 footer.append(socialSection, footerNavContainer);
+
+//? ---------------------------------------
+// ! -------- navbar secondary ---------
+//? ---------------------------------------
+
+const navBarCategories = document.querySelector('.nav-bar-secondary');
+const navBarCategoriesLista = crearLista(navBarSecondary);
+navBarCategories.appendChild(navBarCategoriesLista);
