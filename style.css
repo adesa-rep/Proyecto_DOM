@@ -72,8 +72,6 @@ body {
 
 header {
   width: 100vw;
-  /* display: flex;
-  flex-direction: column; */
   background-color: antiquewhite;
   width: 100vw;
   position: fixed;
@@ -188,7 +186,7 @@ article {
   width: 100%;
 } */
 
-section ~ h2 {
+/* section ~ h2 {
   font-family: 'inter';
   font-weight: 500;
   font-size: var(--typo-md);
@@ -197,7 +195,8 @@ section ~ h2 {
   margin: 0 var(--space-min);
   border-bottom: var(--bottom-line);
   color: red;
-}
+  background-color: red !important;
+} */
 
 /* 
 ? ---------------------------------------
@@ -268,6 +267,75 @@ p.precio {
 
 /* 
 ? ---------------------------------------
+ todo -------- recomendaciones ----------
+ ? ---------------------------------------
+*/
+
+.recomendaciones ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+
+.recomendaciones ul li > article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.recomendaciones ul li article div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.recomendaciones div > h2 {
+  font-size: 1.5rem;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.recomendaciones img {
+  justify-content: center;
+  align-self: center;
+  /* asignamos un ancho fijo y que la altura se autoajuste. Con esto aseguramos que todos los elementos tengan el mismo tamaño y esten alineados */
+  width: 250px;
+  height: auto;
+}
+
+.recomendaciones div {
+  width: 100%;
+}
+
+.recomendaciones button {
+  width: 100%;
+  text-transform: lowercase;
+  letter-spacing: 2px;
+  padding: 8px;
+  background-color: var(--btn-general);
+  border-radius: var(--radius);
+  border: none;
+  cursor: pointer;
+  color: var(--primary-color);
+}
+
+.recomendaciones button:hover,
+a.search-button-recomendaciones:hover {
+  background-color: var(--btn-especial);
+  color: white;
+}
+
+/* 
+? ---------------------------------------
  todo ------------- footer -------------
  ? ---------------------------------------
 */
@@ -291,17 +359,27 @@ footer {
 }
 
 /* ? nav */
+.footer-nav-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  /* justify-content: space-between; */
+}
 
-.footer-nav {
+section.footer-nav {
+  line-height: 1.8;
   padding: var(--space-min);
   font-family: 'inter';
   display: flex;
   flex-direction: column;
   gap: 0px;
+  /* border: 2px solid blue; */
 }
 
-section.footer-nav {
-  line-height: 1.8;
+section.footer-nav > * {
+  text-align: center;
 }
 
 section.footer-nav > h2 {
@@ -324,14 +402,6 @@ section.footer-nav a {
   color: red;
 } */
 
-.footer-nav-container {
-  display: flex;
-  gap: 10px;
-  padding: 10px;
-  margin-bottom: 10px;
-  justify-content: space-between;
-}
-
 /* ? ---------------------------------------
  ! ------ desktop ------
  ? --------------------------------------- */
@@ -346,8 +416,8 @@ section.footer-nav a {
     display: block;
   }
 
-  .header {
-    width: 98vw;
+  header {
+    width: 99vw;
   }
 
   .nav-bar-first {
@@ -487,6 +557,66 @@ section.footer-nav a {
     color: white;
   }
 
+  /* ? recomendaciones */
+
+  .recomendaciones ul {
+    display: grid;
+    /* usamos  autofit para que de forma automatica genere las columnas justas segun la cantidad de items */
+    grid-template-columns: repeat(auto-fit, minmax(325px, 1fr));
+    /* gap: 5px; */
+    /* grid-template-columns: repeat(auto-fit, minmax(325px, 365px)); */
+    gap: 10px;
+  }
+
+  .recomendaciones img {
+    /* ! ------importante: en este caso, para controlar la "deformacion" del grid provocada por los tamaños desiguales de las imagenes, no podemos usar la funcion clamp para hacerlas responsive como con los iconos y otros elementos, en su lugar nos vemos obligados a darles un ancho y alto fijos */
+    width: 200px;
+    height: 300px;
+    object-fit: cover;
+  }
+
+  .recomendaciones ul li > article {
+    /* display: flex; */
+    flex-direction: row;
+    gap: 10px;
+    border: var(--bottom-line);
+    padding: 5px; /*para corregir desbordamiento, de lo contrario habria que jugar con el minmax del grid-temprate-column del ul*/
+    width: 100%;
+    /*para que el article ocupe todo el ancho de la celda de la cuadricula y no se expanda mas alla (no se desbode)*/
+  }
+
+  /* !Nota importante:  */
+
+  .recomendaciones ul li article > div {
+    justify-content: space-around;
+    /*para que el contenedor tenga un ancho y alto uniforme para todos los elementos*/
+    width: 120px;
+    height: 300px;
+    /* ? Para cuidar la separacion del div con el borde derecho, ya que sino algunos elementos llegaran a dicho borde y otros no */
+    /* margin-top: 10px; */
+    /* margin-right: 10px; */
+    margin: 10px 10px 0px 0;
+  }
+
+  .recomendaciones ul li article div > h2 {
+    font-size: var(--typo-xs);
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    width: 100%; /*para que el ancho del titulo sea uniforme siempre y la lineas horizontales ocupen todo el ancho*/
+    height: clamp(60px, calc(59px + 1vw), 80px);
+    align-content: center;
+  }
+
+  /*? un botón dentro de una celda de un grid con 1fr en la configuración de las filas o columnas, el botón ocupa todo el alto porque, de forma predeterminada, los elementos dentro de una celda tienden a expandirse para llenar el espacio disponible. Asi que para controlar esto, se puede establecer el alto del botón (en caso de la celda fuese 1fr)*/
+
+  .recomendaciones button,
+  a.search-button-recomendaciones {
+    width: 100%;
+    text-transform: lowercase;
+    letter-spacing: 2px;
+    padding: 8px;
+  }
+
   /* ? footer */
 
   footer {
@@ -525,6 +655,7 @@ section.footer-nav a {
 
   .footer-nav {
     display: grid;
+    /* border: 2px solid red; */
   }
 
   .footer-nav-container section > h2 {
@@ -549,5 +680,115 @@ section.footer-nav a {
   .footer-nav-container section a:hover {
     filter: drop-shadow(5px 5px 5px rgb(255, 166, 0));
     color: black;
+  }
+}
+
+@media (min-width: 900px) {
+  .ico-menu {
+    display: none;
+  }
+
+  header .nav-bar-secondary {
+    display: block;
+  }
+
+  /* header {
+    height: var(--header-desktop-height);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+  } */
+
+  header .nav-bar-first {
+    margin-bottom: 10px;
+  }
+
+  header .nav-bar-secondary {
+    /* transition: none; */
+    /* transform: none; */
+    width: 100%;
+  }
+
+  header .nav-bar-first .ico-menu,
+  header .nav-bar-secondary {
+    position: static;
+  }
+
+  header .nav-bar-secondary ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    /* padding: 0px; */
+    gap: 5px;
+    justify-content: center;
+    /* border: 2px solid red; */
+  }
+
+  .nav-bar-secondary ul li {
+    margin-left: 0;
+    /*quitamos la alineacion de la vista par movil*/
+  }
+
+  .nav-bar-secondary ul li a {
+    text-align: center;
+  }
+
+  main {
+    width: 90vw;
+    margin: 0 5vw;
+    /*espacio para que sea sea visible todo el contenido del main y no quede solapado con el header*/
+    margin-top: 110px;
+  }
+
+  /*! ****************************** */
+  /*! ************** esto debe ir en el media de 500px**************** */
+  /*! ****************************** */
+  /*! ****************************** */
+
+  header .nav-bar-secondary {
+    width: 100vw; /*queremos que el menu ocupe el 100% de la pantalla*/
+  }
+
+  header .nav-bar-secondary ul {
+    display: flex;
+    /* flex-direction: column; */
+    gap: 10px;
+    padding: 0px 10px;
+    align-items: flex-start;
+    background-color: antiquewhite;
+    width: 100%;
+  }
+
+  .nav-bar-secondary ul li {
+    margin-left: 50px; /*para que quede mas o menos debajo del logo*/
+    /* border: 2px solid blue; */
+    /* width: 240px; */
+  }
+
+  header .nav-bar-secondary ul li a {
+    align-self: center;
+    justify-content: center;
+    margin: auto;
+    /*damos una altura fija a los anchor para que al hacer hover y agregar un padding no cambie tamaño del header (noo de saltos)*/
+    width: 140px;
+    /* width: 200px; */
+    height: 20px;
+    transition: all 0.4s ease-in-out;
+    /* border: 2px solid red; */
+    padding: 3px 18px;
+    border: 1px solid transparent;
+  }
+
+  .nav-bar-secondary ul li a:hover {
+    color: white;
+    border: 1px solid black;
+    background-color: orange;
+    border-radius: 10px;
+    /* padding: 0.5px 18px; */
+    text-align: center;
   }
 }

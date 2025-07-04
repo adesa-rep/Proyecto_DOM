@@ -70,15 +70,15 @@ const categorias = [
 ];
 
 const navBarSecondary = [
-  'Imprescindibles',
-  'Ficción',
-  'No Ficción',
-  'Infantil',
-  'Juvenil',
-  'Comics y Manga',
-  'English Books',
-  'Papelería',
-  'Ebooks'
+  { href: '#', text: 'Imprescindibles' },
+  { href: '#', text: 'Ficción' },
+  { href: '#', text: 'No Ficción' },
+  { href: '#', text: 'Infantil' },
+  { href: '#', text: 'Juvenil' },
+  { href: '#', text: 'Comics y Manga' },
+  { href: '#', text: 'English Books' },
+  { href: '#', text: 'Papelería' },
+  { href: '#', text: 'Ebooks' }
 ];
 
 const recomendaciones = [
@@ -96,11 +96,6 @@ const recomendaciones = [
     titulo: 'Amarilla',
     source: './assets/section recomendations/amarillawebp.webp',
     descripcion: 'portada libro amarilla'
-  },
-  {
-    titulo: '',
-    source: '',
-    descripcion: ''
   },
   {
     titulo: 'Cocina japonesa',
@@ -193,6 +188,44 @@ const footerInfoLegal = [
   }
 ];
 
+const footerAyuda = [
+  {
+    href: '#',
+    text: 'Pago seguro con tarjeta'
+  },
+  {
+    href: '#',
+    text: 'Pagar con Klarna'
+  },
+  {
+    href: '#',
+    text: 'Devoluciones'
+  },
+  {
+    href: '#',
+    text: 'Bono Cultural Joven'
+  },
+  {
+    href: '#',
+    text: 'Contacta con nosotros'
+  }
+];
+
+const footerServicios = [
+  {
+    href: '#',
+    text: 'Casa del Libro Plus'
+  },
+  {
+    href: '#',
+    text: 'Vende con nosotros'
+  },
+  {
+    href: '#',
+    text: 'Venta a Empresas e Instituciones'
+  }
+];
+
 //? ---------------------------------------
 // ! ------------ FUNCIONES ------------
 //? ---------------------------------------
@@ -244,7 +277,10 @@ const crearLista = (array) => {
   const ul = document.createElement('ul');
   array.forEach((element) => {
     const li = document.createElement('li');
-    li.textContent = element;
+    // li.textContent = element;
+    li.innerHTML = `
+      <a href="${element.href}">${element.text}</a>
+    `;
     ul.appendChild(li);
   });
   return ul;
@@ -258,12 +294,47 @@ const bestSellersSection = document.querySelector('.best-sellers'); //recuperamo
 
 const h2BestSeller = document.createElement('h2');
 h2BestSeller.textContent = 'Mas vendidos';
+// bestSellersSection.appendChild(h2BestSeller);
 
 //? ejecutamos funcion crear galeria para crear galeria de imagenes con los libros y sus datos. El valor ul devuelto por la funcion es guardado en galeriaBestSellers para luego ser añadido en la section
 const galeriaBestSellers = crearGaleria(bestSellers);
 bestSellersSection.appendChild(galeriaBestSellers);
 
 bestSellersSection.insertAdjacentElement('afterbegin', h2BestSeller);
+
+//? ---------------------------------------
+// ! ---------- recomendaciones -----------
+//? ---------------------------------------
+
+// recuperar la seccion con clase recomendaciones
+const recomendacionesSection = document.querySelector('.recomendaciones');
+
+// crear titulo de la seccion
+const h2Recomendaciones = document.createElement('h2');
+h2Recomendaciones.textContent = 'Recomendaciones';
+
+// crear galeria
+const grillaRecomendaciones = (recomendaciones) => {
+  const ul = document.createElement('ul');
+  recomendaciones.forEach((element) => {
+    const li = document.createElement('li');
+    const article = document.createElement('article');
+    article.innerHTML = `
+      <img src="${element.source}" alt="${element.descripcion}" />
+      <div>
+        <h2>${element.titulo}</h2>
+        <button>ver libro</button>
+      </div>
+    `;
+    li.appendChild(article);
+    ul.appendChild(li);
+  });
+  return ul;
+};
+
+recomendacionesSection.appendChild(grillaRecomendaciones(recomendaciones));
+
+recomendacionesSection.insertAdjacentElement('afterbegin', h2Recomendaciones);
 
 //? ---------------------------------------
 // ! ------------ footer ------------
@@ -289,7 +360,7 @@ footerSocial.forEach((social) => {
 socialSection.appendChild(ul);
 //footer.appendChild(socialSection);
 
-//seccion para info de la casa del libro
+// ******** seccion para info de la casa del libro
 const casaLibroSection = document.createElement('section');
 casaLibroSection.className = 'footer-nav';
 //ejecutamos la funcion crear lista:
@@ -297,17 +368,35 @@ const casaLibroLista = crearSection(footerCasaLibro, 'Casa del libro'); //devuel
 casaLibroSection.append(casaLibroLista[0], casaLibroLista[1]);
 // casaLibroSection.appendChild(casaLibroLista);
 
-//seccion para info legal
+// ********* seccion para info legal
 const infoLegalSection = document.createElement('section');
 infoLegalSection.className = 'footer-nav';
 const infoLegalLista = crearSection(footerInfoLegal, 'Informacion Legal');
 infoLegalSection.append(infoLegalLista[0], infoLegalLista[1]);
 
+// ********* seccion para Ayuda
+const ayudaSection = document.createElement('section');
+ayudaSection.className = 'footer-nav';
+const ayudaLista = crearSection(footerAyuda, 'Ayuda');
+ayudaSection.append(ayudaLista[0], ayudaLista[1]);
+
+// ********* seccion para Servicios
+const serviciosSection = document.createElement('section');
+serviciosSection.className = 'footer-nav';
+const serviciosLista = crearSection(footerServicios, 'Servicios');
+serviciosSection.append(serviciosLista[0], serviciosLista[1]);
+
+// ********* introducir todo en el DOM
 const footerNavContainer = document.createElement('div');
 footerNavContainer.className = 'footer-nav-container';
 
 // footer.append(socialSection, casaLibroSection, infoLegalSection);
-footerNavContainer.append(casaLibroSection, infoLegalSection);
+footerNavContainer.append(
+  casaLibroSection,
+  infoLegalSection,
+  ayudaSection,
+  serviciosSection
+);
 footer.append(socialSection, footerNavContainer);
 
 //? ---------------------------------------
