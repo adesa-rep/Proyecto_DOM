@@ -69,7 +69,7 @@ const categorias = [
   'Ciencia'
 ];
 
-const navBarSecondary = [
+const generos = [
   { href: '#', text: 'Imprescindibles' },
   { href: '#', text: 'Ficción' },
   { href: '#', text: 'No Ficción' },
@@ -286,6 +286,24 @@ const crearLista = (array) => {
   return ul;
 };
 
+const crearGrilla = (array) => {
+  const ul = document.createElement('ul');
+  array.forEach((element) => {
+    const li = document.createElement('li');
+    const article = document.createElement('article');
+    article.innerHTML = `
+      <img src="${element.source}" alt="${element.descripcion}" />
+      <div>
+        <h2>${element.titulo}</h2>
+        <button>ver libro</button>
+      </div>
+    `;
+    li.appendChild(article);
+    ul.appendChild(li);
+  });
+  return ul;
+};
+
 //? ---------------------------------------
 // ! ------------ best sellers ------------
 //? ---------------------------------------
@@ -314,25 +332,10 @@ const h2Recomendaciones = document.createElement('h2');
 h2Recomendaciones.textContent = 'Recomendaciones';
 
 // crear galeria
-const grillaRecomendaciones = (recomendaciones) => {
-  const ul = document.createElement('ul');
-  recomendaciones.forEach((element) => {
-    const li = document.createElement('li');
-    const article = document.createElement('article');
-    article.innerHTML = `
-      <img src="${element.source}" alt="${element.descripcion}" />
-      <div>
-        <h2>${element.titulo}</h2>
-        <button>ver libro</button>
-      </div>
-    `;
-    li.appendChild(article);
-    ul.appendChild(li);
-  });
-  return ul;
-};
+const grillaRecomendaciones = crearGrilla(recomendaciones);
 
-recomendacionesSection.appendChild(grillaRecomendaciones(recomendaciones));
+// recomendacionesSection.appendChild(crearGrilla(recomendaciones));
+recomendacionesSection.appendChild(grillaRecomendaciones);
 
 recomendacionesSection.insertAdjacentElement('afterbegin', h2Recomendaciones);
 
@@ -403,6 +406,172 @@ footer.append(socialSection, footerNavContainer);
 // ! -------- navbar secondary ---------
 //? ---------------------------------------
 
-const navBarCategories = document.querySelector('.nav-bar-secondary');
-const navBarCategoriesLista = crearLista(navBarSecondary);
-navBarCategories.appendChild(navBarCategoriesLista);
+const navBarSecondary = document.querySelector('.nav-bar-secondary');
+const navBarSecondaryLista = crearLista(generos);
+navBarSecondary.appendChild(navBarSecondaryLista);
+
+//? ---------------------------------------
+// ! --- menu hamburguesa con .ico-menu ---
+//? ---------------------------------------
+// Toggle del menú
+document.querySelector('.ico-menu').addEventListener('click', function () {
+  document.querySelector('.nav-bar-secondary').classList.toggle('active');
+});
+
+//? ---------------------------------------
+// ! --- barra de busqueda ---
+//? ---------------------------------------
+
+// Seleccionar el formulario de búsqueda y el input
+const searchForm = document.querySelector('.barra-busqueda form');
+const searchInput = document.querySelector('#busqueda');
+
+//? ---------------------------------------
+// ! funciones
+//? ---------------------------------------
+
+// Función para filtrar los arrays según el término de búsqueda
+const buscarLibros = (termino) => {
+  termino = termino.toLowerCase().trim();
+
+  // Filtrar bestSellers
+  const resultadosBestSellers = bestSellers.filter(
+    (libro) =>
+      libro.titulo.toLowerCase().includes(termino) ||
+      libro.autor.toLowerCase().includes(termino) ||
+      libro.descripcion.toLowerCase().includes(termino)
+  );
+
+  // Filtrar recomendaciones
+  const resultadosRecomendaciones = recomendaciones.filter(
+    (libro) =>
+      libro.titulo.toLowerCase().includes(termino) ||
+      libro.descripcion.toLowerCase().includes(termino)
+  );
+
+  return { resultadosBestSellers, resultadosRecomendaciones };
+};
+
+//   Función para actualizar el DOM con los resultados de búsqueda
+const actualizarResultados = (
+  resultadosBestSellers,
+  resultadosRecomendaciones
+) => {
+  // Limpiar secciones
+  bestSellersSection.innerHTML = '';
+  recomendacionesSection.innerHTML = '';
+
+  // Restaurar títulos
+  bestSellersSection.appendChild(h2BestSeller);
+  recomendacionesSection.appendChild(h2Recomendaciones);
+
+  // Mostrar resultados de best-sellers
+  if (resultadosBestSellers.length > 0) {
+    const galeriaBestSellers = crearGaleria(resultadosBestSellers);
+    bestSellersSection.appendChild(galeriaBestSellers);
+
+    //! Para cambiar best-sellers (solo si el campo no está vacío)
+    const ulBestSellers = document.querySelector('.best-sellers ul');
+    // const termino = searchInput.value;
+    if (ulBestSellers) {
+      const termino = searchInput.value;
+      if (termino !== '') {
+        ulBestSellers.style.overflowX = 'visible'; // Quitar scroll horizontal
+        ulBestSellers.style.justifyContent = 'center'; // Centrar elementos
+        ulBestSellers.style.border = 'none'; // Quitar borde
+      } else {
+        // Restaurar estilos CSS originales
+        ulBestSellers.style.overflowX = '';
+        ulBestSellers.style.justifyContent = '';
+        ulBestSellers.style.border = '';
+      }
+    } else {
+      console.log('ulBestsellers no existe');
+    }
+  } else {
+    const mensaje = document.createElement('p');
+    mensaje.textContent =
+      'No se encontraron libros best-sellers para esta búsqueda.';
+    mensaje.style.textAlign = 'center';
+    mensaje.style.padding = '20px';
+    bestSellersSection.appendChild(mensaje);
+  }
+
+  // Mostrar resultados de recomendaciones
+  if (resultadosRecomendaciones.length > 0) {
+    const grillaRecomendaciones = crearGrilla(resultadosRecomendaciones);
+    recomendacionesSection.appendChild(grillaRecomendaciones);
+
+    //! Cambiar el ancho de los <article> en recomendaciones cuando se realiza una busqueda, es decir cuando termino !== 0  (solo puede cambiarse el ancho cuando ya existen los elementos, asi que debe ser tras crear la grilla)
+    const articlesRecomendaciones = document.querySelectorAll(
+      '.recomendaciones ul li article'
+    );
+    console.log(articlesRecomendaciones); // Para depuración
+    // articlesRecomendaciones.forEach((article) => {
+    //   article.style.width = '3500px';
+    // });
+
+    if (articlesRecomendaciones) {
+      const termino = searchInput.value;
+      if (termino !== '') {
+        articlesRecomendaciones.forEach((article) => {
+          article.style.width = '350px';
+        });
+      } else {
+        // Restaurar estilos CSS originales
+        articlesRecomendaciones.forEach((article) => {
+          article.style.width = '';
+        });
+      }
+    } else {
+      console.log('articlesRecomendaciones no existe');
+    }
+  } else {
+    const mensaje = document.createElement('p');
+    mensaje.textContent =
+      'No se encontraron libros recomendados para esta búsqueda.';
+    mensaje.style.textAlign = 'center';
+    mensaje.style.padding = '20px';
+    recomendacionesSection.appendChild(mensaje);
+  }
+};
+
+//? ---------------------------------------
+// ! eventos
+//? ---------------------------------------
+
+// Escuchar el evento de submit del formulario
+searchForm.addEventListener('submit', (e) => {
+  e.preventDefault(); // Prevenir el comportamiento por defecto del formulario para asegurar que la página no se recargue ni intente enviar datos a un servidor, permitiendo que el código JavaScript maneje la búsqueda completamente
+  const termino = searchInput.value;
+  // Validar si el input está vacío
+  if (termino === '') {
+    // Restaurar el contenido original
+    actualizarResultados(bestSellers, recomendaciones);
+    // Opcional: Mostrar feedback visual
+    searchInput.placeholder = 'Por favor, ingrese un término de búsqueda';
+
+    setTimeout(() => {
+      searchInput.placeholder = 'Busca por autor, título, género, ISBN'; // Restaurar placeholder original
+    }, 2000);
+    return; // Salir de la función
+  }
+
+  // Si el input no está vacío, proceder con la búsqueda
+  const { resultadosBestSellers, resultadosRecomendaciones } =
+    buscarLibros(termino);
+  actualizarResultados(resultadosBestSellers, resultadosRecomendaciones);
+});
+
+// Escuchar el evento de input para búsquedas en tiempo real (opcional)
+searchInput.addEventListener('input', () => {
+  const termino = searchInput.value;
+  if (termino === '') {
+    // Restaurar contenido original si el input está vacío
+    actualizarResultados(bestSellers, recomendaciones);
+  } else {
+    const { resultadosBestSellers, resultadosRecomendaciones } =
+      buscarLibros(termino);
+    actualizarResultados(resultadosBestSellers, resultadosRecomendaciones);
+  }
+});

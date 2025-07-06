@@ -141,6 +141,11 @@ header {
   font-size: var(--typo-xs);
 }
 
+.barra-busqueda form > input {
+  color: black;
+  text-align: center;
+}
+
 .login {
   grid-area: cuenta;
   justify-self: center;
@@ -182,22 +187,6 @@ article {
   padding: var(--space-max);
 }
 
-/* article > img {
-  width: 100%;
-} */
-
-/* section ~ h2 {
-  font-family: 'inter';
-  font-weight: 500;
-  font-size: var(--typo-md);
-  line-height: 1.8;
-  letter-spacing: 1.5px;
-  margin: 0 var(--space-min);
-  border-bottom: var(--bottom-line);
-  color: red;
-  background-color: red !important;
-} */
-
 /* 
 ? ---------------------------------------
  todo ---------- best sellers ----------
@@ -219,6 +208,7 @@ article {
   justify-content: center;
   gap: 10px;
   border: 1px solid rgb(184, 183, 183);
+  /* background-color: red; */
 }
 
 .best-sellers ul {
@@ -393,14 +383,50 @@ section.footer-nav a {
   text-align: center;
 }
 
-/* footer p {
-  background-color: black;
-  color: white;
-  line-height: 2;
-  text-align: center;
-  width: 100%;
-  color: red;
-} */
+/* ? ---------------------------------------
+ todo ---- menu hamburguesa con .ico-menu ---
+ ? --------------------------------------- */
+.ico-menu {
+  cursor: pointer;
+  z-index: 1001;
+}
+
+header .nav-bar-secondary {
+  display: inline;
+  background: antiquewhite;
+  position: fixed;
+  top: 55px;
+  left: -250px; /* Escondido */
+  transition: left 0.3s ease-in-out;
+  z-index: 1000;
+  padding-bottom: 15px;
+  /* border: var(--border-red); */
+}
+
+header .nav-bar-secondary.active {
+  left: 0;
+  width: 100vw;
+}
+
+header .nav-bar-secondary ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  /* width: 100%; */
+  margin-left: 20px;
+}
+
+header .nav-bar-secondary ul li a {
+  align-self: center;
+  justify-content: center;
+  margin: auto;
+  /*damos una altura fija a los anchor para que al hacer hover y agregar un padding no cambie tamaño del header (noo de saltos)*/
+  width: 140px;
+  height: 20px;
+  transition: all 0.4s ease-in-out;
+}
+/* ********************************************* */
 
 /* ? ---------------------------------------
  ! ------ desktop ------
@@ -434,6 +460,52 @@ section.footer-nav a {
     padding: 0;
   }
 
+  /* nav bar secondary */
+  header .nav-bar-secondary {
+    width: 100vw; /*queremos que el menu ocupe el 100% de la pantalla*/
+    padding: 0px 10px;
+  }
+
+  header .nav-bar-secondary ul {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    /* padding: 0px 10px; */
+    align-items: flex-start;
+    background-color: antiquewhite;
+    width: 100%;
+  }
+
+  .nav-bar-secondary ul li {
+    margin-left: 50px; /*para que quede mas o menos debajo del logo*/
+    /* border: 2px solid blue; */
+    /* width: 240px; */
+  }
+
+  header .nav-bar-secondary ul li a {
+    align-self: center;
+    justify-content: center;
+    margin: auto;
+    /*damos una altura fija a los anchor para que al hacer hover y agregar un padding no cambie tamaño del header (noo de saltos)*/
+    width: 140px;
+    /* width: 200px; */
+    height: 20px;
+    transition: all 0.4s ease-in-out;
+    /* border: 2px solid red; */
+    padding: 3px 18px;
+    border: 1px solid transparent;
+  }
+
+  .nav-bar-secondary ul li a:hover {
+    color: white;
+    border: 1px solid black;
+    background-color: orange;
+    border-radius: 10px;
+    /* padding: 0.5px 18px; */
+    text-align: center;
+  }
+
+  /* ! ************ */
   /* ? main */
   main {
     width: 98vw;
@@ -446,7 +518,8 @@ section.footer-nav a {
 
   .best-sellers ul {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    /* grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); */
+    grid-template-columns: repeat(auto-fit, minmax(230px, 230px));
     grid-auto-flow: column; /*! Asegura el scroll horizontal */
     gap: 10px;
     padding-bottom: 10px;
@@ -562,9 +635,11 @@ section.footer-nav a {
   .recomendaciones ul {
     display: grid;
     /* usamos  autofit para que de forma automatica genere las columnas justas segun la cantidad de items */
-    grid-template-columns: repeat(auto-fit, minmax(325px, 1fr));
-    /* gap: 5px; */
-    /* grid-template-columns: repeat(auto-fit, minmax(325px, 365px)); */
+    /* grid-template-columns: repeat(auto-fit, minmax(325px, 1fr)); */
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(325px, 365px)
+    ); /*! no podemos usar 1fr porque si no hay suficientes elementos en la grilla, se veran muy muy espaciados*/
     gap: 10px;
   }
 
@@ -584,8 +659,6 @@ section.footer-nav a {
     width: 100%;
     /*para que el article ocupe todo el ancho de la celda de la cuadricula y no se expanda mas alla (no se desbode)*/
   }
-
-  /* !Nota importante:  */
 
   .recomendaciones ul li article > div {
     justify-content: space-around;
@@ -690,6 +763,11 @@ section.footer-nav a {
 
   header .nav-bar-secondary {
     display: block;
+    /* transition: none; */
+    /* transform: none; */
+    width: 100%;
+    /* padding: 0px; */
+    box-shadow: none;
   }
 
   /* header {
@@ -704,12 +782,6 @@ section.footer-nav a {
 
   header .nav-bar-first {
     margin-bottom: 10px;
-  }
-
-  header .nav-bar-secondary {
-    /* transition: none; */
-    /* transform: none; */
-    width: 100%;
   }
 
   header .nav-bar-first .ico-menu,
@@ -742,53 +814,5 @@ section.footer-nav a {
     margin: 0 5vw;
     /*espacio para que sea sea visible todo el contenido del main y no quede solapado con el header*/
     margin-top: 110px;
-  }
-
-  /*! ****************************** */
-  /*! ************** esto debe ir en el media de 500px**************** */
-  /*! ****************************** */
-  /*! ****************************** */
-
-  header .nav-bar-secondary {
-    width: 100vw; /*queremos que el menu ocupe el 100% de la pantalla*/
-  }
-
-  header .nav-bar-secondary ul {
-    display: flex;
-    /* flex-direction: column; */
-    gap: 10px;
-    padding: 0px 10px;
-    align-items: flex-start;
-    background-color: antiquewhite;
-    width: 100%;
-  }
-
-  .nav-bar-secondary ul li {
-    margin-left: 50px; /*para que quede mas o menos debajo del logo*/
-    /* border: 2px solid blue; */
-    /* width: 240px; */
-  }
-
-  header .nav-bar-secondary ul li a {
-    align-self: center;
-    justify-content: center;
-    margin: auto;
-    /*damos una altura fija a los anchor para que al hacer hover y agregar un padding no cambie tamaño del header (noo de saltos)*/
-    width: 140px;
-    /* width: 200px; */
-    height: 20px;
-    transition: all 0.4s ease-in-out;
-    /* border: 2px solid red; */
-    padding: 3px 18px;
-    border: 1px solid transparent;
-  }
-
-  .nav-bar-secondary ul li a:hover {
-    color: white;
-    border: 1px solid black;
-    background-color: orange;
-    border-radius: 10px;
-    /* padding: 0.5px 18px; */
-    text-align: center;
   }
 }
