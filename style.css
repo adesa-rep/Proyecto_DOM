@@ -100,6 +100,7 @@ header {
   height: auto; /* Mantiene la proporción */
   align-self: center;
   justify-self: center;
+  cursor: pointer;
 }
 
 .ico-menu {
@@ -144,6 +145,7 @@ header {
 .barra-busqueda form > input {
   color: black;
   text-align: center;
+  font-size: var(--typo-xs);
 }
 
 .login {
@@ -167,7 +169,9 @@ header {
 
 main {
   width: 100vw;
-  margin-top: var(--header-mobile-height);
+  margin-top: var(
+    --header-mobile-height
+  ); /*espacio para que sea sea visible todo el contenido del main y no quede solapado con el header*/
 }
 
 main button {
@@ -187,17 +191,21 @@ article {
   padding: var(--space-max);
 }
 
+section > h2 {
+  font-family: 'inter';
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 1.8;
+  letter-spacing: 1.5px;
+  margin: 0 var(--space-min);
+  border-bottom: var(--bottom-line);
+}
+
 /* 
 ? ---------------------------------------
  todo ---------- best sellers ----------
  ? ---------------------------------------
 */
-
-.best-sellers > h2 {
-  margin-left: 10px;
-  /* margin-top: 100px; */
-  font-size: var(--typo-sm);
-}
 
 /* tanto el ul como el article de best-sellers estan en flex column */
 .best-sellers ul,
@@ -623,8 +631,8 @@ header .nav-bar-secondary ul li a {
     font-size: var(--typo-xs);
   }
 
-  /* efecto sobre botones del nav y sobre .acciones */
-  button:hover {
+  /* efecto sobre botones de la clase .acciones del los best-selllers */
+  .acciones button:hover {
     /* background: rgb(168, 133, 69); */
     background-color: orange;
     color: white;

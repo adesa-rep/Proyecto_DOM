@@ -22,7 +22,7 @@ const bestSellers = [
     source: './assets/section best sellers/el_niño_que_perdio_la_guerra.webp',
     descripcion: 'libro el niño que perdio la guerra',
     autor: 'Julia Navarro',
-    precio: 15.8 + '&uro'
+    precio: 15.8 + '&euro'
   },
   {
     titulo: 'LA ASISTENTA',
@@ -312,7 +312,7 @@ const bestSellersSection = document.querySelector('.best-sellers'); //recuperamo
 
 const h2BestSeller = document.createElement('h2');
 h2BestSeller.textContent = 'Mas vendidos';
-// bestSellersSection.appendChild(h2BestSeller);
+bestSellersSection.appendChild(h2BestSeller);
 
 //? ejecutamos funcion crear galeria para crear galeria de imagenes con los libros y sus datos. El valor ul devuelto por la funcion es guardado en galeriaBestSellers para luego ser añadido en la section
 const galeriaBestSellers = crearGaleria(bestSellers);
